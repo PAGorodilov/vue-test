@@ -8,7 +8,7 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import Card from '@/components/Card.vue'
 
 export default {

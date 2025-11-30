@@ -1,10 +1,22 @@
-// import { useRoute } from 'vue-router'
-// import { computed } from 'vue'
 import store from '@/store'
 
-// export function useUtils() {
-//   return {  }
-// }
+export function useState() {
+  const { useState } = store
+  const state = useState()
+
+  const formatPrice = (({ currency = 'USD', value = '0' } = {}) => {
+    const formatter = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: currency,
+      currencyDisplay: 'symbol',
+    })
+    return formatter.format(value)
+  })
+  const getImageUrl = (image) => {
+    return image ? require(`@/assets${ image }`) : ''
+  }
+  return { state, formatPrice, getImageUrl }
+}
 export async function loadResources() {
   const { useBrandsStore, useProductsStore } = store
   const brands = useBrandsStore()

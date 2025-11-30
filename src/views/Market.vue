@@ -3,6 +3,7 @@
     <template #filters>
       filters
     </template>
+    <Product />
     <Card
       v-for="card in products.products"
       :card="card"
@@ -11,6 +12,7 @@
 </template>
 
 <script setup>
+  import Product from '@/views/Product.vue'
   import Catalog from '@/components/Catalog.vue'
   import Card from '@/components/Card.vue'
   import { loadResources } from '@/utils/Base'

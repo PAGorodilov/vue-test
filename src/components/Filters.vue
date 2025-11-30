@@ -4,7 +4,7 @@
   </div>
 </template>
 
-<script>
+<script setup>
 export default {
   name: 'Card',
   props: {

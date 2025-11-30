@@ -1,9 +1,9 @@
 <template>
+  <Header />
   <router-view v-slot="{ Component, route }">
     <template v-if="Component">
-      <Header />
-      <main>
-        <transition mode="out-in" name="page-fade">
+      <transition mode="out-in" name="page-fade">
+        <main>
           <KeepAlive>
             <suspense>
               <component :key="route.path" :is="Component"></component>
@@ -13,11 +13,11 @@
               </template>
             </suspense>
           </KeepAlive>
-        </transition>
-      </main>
-      <Footer />
+        </main>
+      </transition>
     </template>
   </router-view>
+  <Footer />
 </template>
 
 <script setup>

@@ -18,6 +18,9 @@ export default defineStore('brandsStore', {
     brands (state) {
       return state.brandsList.sort(state.sortBy)
     },
+    brandByProduct (state) {
+      return (product) => state.brandsList.find(e => e.id === product.brand)
+    },
   },
   actions: {
     async downloadBrands () {
