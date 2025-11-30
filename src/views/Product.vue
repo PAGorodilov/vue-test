@@ -23,7 +23,7 @@
           {{ currentProduct.description }}
         </p>
         <template #footer>
-          colors
+          <Tags />
         </template>
         <template #action>
           <Buy :item="currentProduct" />
@@ -38,6 +38,7 @@
   import { useState, loadResources } from '@/utils/Base'
   import { CartOutline } from '@vicons/ionicons5'
   import { NDrawer, NDrawerContent, NCard, NButton, NIcon, NRate } from 'naive-ui'
+  import Tags from '@/components/Tags.vue'
   import Buy from '@/components/Buy.vue'
   const props = defineProps({
     card: { type: Object },
@@ -49,7 +50,7 @@
     return products.productById(state.openedCard)
   })
 
-//   "type": "simple",
+//     "type": "simple",
 //     "id": 1,
 //     "sku": "s1",
 //     "title": "Product 1",

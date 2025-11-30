@@ -3,16 +3,16 @@
     <RouterLink to="/">
       <img src="@/assets/images/logo.png" />
     </RouterLink>
-    <NFloatButton position="fixed" :class="$style.cart">
-      <RouterLink to="/cart">
-        <NBadge :value="new Set(state.cart).size" :offset="[6, -8]">
+    <RouterLink to="/cart">
+      <NFloatButton position="fixed" :class="$style.cart">
+        <NBadge :value="state.getCartElements.length" :offset="[6, -8]">
           <NIcon>
             <CartOutline />
           </NIcon>
         </NBadge>
-      </RouterLink>
-    </NFloatButton>
-    <NDivider />
+      </NFloatButton>
+    </RouterLink>
+    <NDivider :class="$style.divider" />
   </header>
 </template>
 
@@ -31,10 +31,16 @@
 }
 .header {
   display: flex;
-  width: 100vw;
+  width: 100%;
   box-sizing: border-box;
   flex-direction: row;
   justify-content: space-between;
   padding: 1rem;
+  flex-direction: column;
+  box-sizing: border-box;
+  .divider {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
 }
 </style>

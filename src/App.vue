@@ -3,10 +3,10 @@
   <router-view v-slot="{ Component, route }">
     <template v-if="Component">
       <transition mode="out-in" name="page-fade">
-        <main>
+        <main :class="$style.main" :key="route.path">
           <KeepAlive>
             <suspense>
-              <component :key="route.path" :is="Component"></component>
+              <component :is="Component"></component>
 
               <template #fallback>
                 <Skeleton />
@@ -26,17 +26,22 @@
   import Footer from '@/components/Footer.vue'
 </script>
 
-<style lang="scss" module>
-#app {
+<style module lang="scss">
+:global(#app) {
   font-family: Inter;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   // text-align: center;
   // background-color: $background;
-  // display: flex;
+  display: flex;
   // align-content: center;
   // justify-content: center;
-  // height: 100vh;
+  min-height: 100vh;
   // flex-wrap: wrap;
+  flex-direction: column;
+}
+.main {
+  flex-grow: 1;
+  display: flex;
 }
 </style>

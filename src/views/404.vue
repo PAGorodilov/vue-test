@@ -1,7 +1,7 @@
 <template>
-  <div class="center">
+  <main class="center">
     <img src="@/assets/images/404.png" />
-  </div>
+  </main>
 </template>
 
 <style lang="scss" module>

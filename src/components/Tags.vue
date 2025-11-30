@@ -1,7 +1,7 @@
 <template>
   <NSpace>
     <NTag
-      v-for="tag in ['red','blue','cyan']"
+      v-for="tag in []"
       :class="$style.tag"
       :bordered="false"
       :color="{color:tag}"

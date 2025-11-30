@@ -1,13 +1,18 @@
 <template>
   <NInputNumber
-    @click.stop=""
     v-if="state.cart.includes(item)"
+    :class="$style.input"
     button-placement="both"
     :value="state.cart.filter(e => e.id === item.id).length"
-    @update:value="update"
+    @click.stop=""
+    @update:value="state.update($event, item)"
   />
-  <NButton v-else @click.stop="state.cart.push(item)">
-    <NIcon>
+  <NButton
+    v-else
+    :class="$style.input"
+    @click.stop="state.cart.push(item)"
+  >
+    <NIcon :class="$style.cart">
       <CartOutline />
     </NIcon>
     {{ formatPrice(item.regular_price) }}
@@ -18,23 +23,10 @@
   import { CartOutline } from '@vicons/ionicons5'
   import { NButton, NIcon, NInputNumber } from 'naive-ui'
   import { useState } from '@/utils/Base'
-  import Buy from '@/components/Buy.vue'
-  const props = defineProps({
+  defineProps({
     item: { type: Object },
   })
   const { state, formatPrice } = useState()
-
-  const update = (val) => {
-    const old = state.cart.filter(e => e.id === props.item.id).length
-    if (old < val) {
-      //add
-      state.cart.push(props.item)
-    } else if (old > val) {
-      //delete
-      const index = state.cart.findIndex(e => e.id === props.item.id)
-      state.cart.splice(index, 1)
-    }
-  }
 </script>
 
 <style lang="scss" module>
@@ -42,6 +34,15 @@
   flex-basis: calc(30% - 1px);
   flex-grow: 1;
   cursor: pointer;
+}
+.input {
+  width: 100%;
+  justify-self: center;
+  text-align: center;
+}
+.cart {
+  margin-right: 1rem;
+  transform: scale(2);
 }
 .description {
   display: -webkit-box;

@@ -34,8 +34,8 @@
 
 <style lang="scss" module>
 .card {
-  flex-basis: calc(30% - 1px);
-  flex-grow: 1;
+  flex-basis: calc(100% / 3 - 1rem);
+  flex-grow: 0;
   cursor: pointer;
 }
 </style>

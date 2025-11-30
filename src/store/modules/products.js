@@ -2,21 +2,15 @@ import wait from '@/utils/wait'
 import productsJson from '@/json/products'
 import { defineStore } from 'pinia'
 
-const sortOptions = {
-  default: e => e.title,
-  byPriceAsc: e => e.regular_price.value,
-  byPriceDesc: e => e.regular_price.value,
-}
 
 export default defineStore('productsStore', {
   state: () => ({
     productsList: [],
-    sortBy: sortOptions.default,
-    sortOptions,
+    filters: new Set,
   }),
   getters: {
-    products (state) {
-      return state.productsList.sort(state.sortBy)
+    products () {
+      return this.filters.size ? this.productsList.filter(e => this.filters.has(e.brand)) : this.productsList
     },
     productById (state) {
       return (id) => state.productsList.find(e => e.id === id)
