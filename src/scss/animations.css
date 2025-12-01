@@ -8,18 +8,25 @@
   opacity: 0;
 }
 
+
+
+
+
 .list-move,
 .list-enter-active,
 .list-leave-active {
-  transition: all 0.5s ease;
+  transition: all 0.5s ease!important;
 }
 
 .list-enter-from,
 .list-leave-to {
-  opacity: 0;
-  transform: translateX(1rem);
+  opacity: 0!important;
+  transform: scale(0) !important;
 }
 
 .list-leave-active {
-  position: absolute;
+  position: absolute!important;
 }
+
+
+

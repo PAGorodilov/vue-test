@@ -1,5 +1,6 @@
 <template>
-  <NCard :class="$style.card" @click="state.openedCard = card.id">
+<div :class="$style.card">
+  <NCard @click="state.openedCard = card.id">
     <template #cover>
       <img :src="getImageUrl(card.image)" :class="$style.image">
     </template>
@@ -17,6 +18,7 @@
     </template>
     <NRate readonly :default-value="card.rate" />
   </NCard>
+  </div>
 </template>
 
 <script setup>
@@ -34,7 +36,7 @@
 
 <style lang="scss" module>
 .card {
-  flex-basis: calc(100% / 3 - 1rem);
+  width: calc(100% / 3 - 1rem);
   flex-grow: 0;
   cursor: pointer;
 }
