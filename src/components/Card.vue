@@ -1,6 +1,6 @@
 <template>
 <div :class="$style.card">
-  <NCard @click="state.openedCard = card.id">
+<NCard @click="state.openedCard = card.id">
     <template #cover>
       <img :src="getImageUrl(card.image)" :class="$style.image">
     </template>
@@ -8,7 +8,7 @@
       {{ card.title }}
     </template>
     <template #header-extra>
-      {{ brands.brandByProduct(card).title }}
+      {{ brandName }}
     </template>
     <template #footer>
       <Tags />
@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-  import { computed } from 'vue'
+  import { ref } from 'vue'
   import { NCard, NRate } from 'naive-ui'
   import { useState, loadResources } from '@/utils/Base'
   import Buy from '@/components/Buy.vue'
@@ -31,13 +31,18 @@
     card: { type: Object },
   })
   const { state, getImageUrl } = useState()
-  const { brands } = await loadResources()
+  const brandName = ref('test');
+  loadResources().then(({brands}) => {
+    brandName.value = brands.brandByProduct(props.card).title
+  })
 </script>
 
 <style lang="scss" module>
 .card {
   width: calc(100% / 3 - 1rem);
   flex-grow: 0;
+  margin: 0 1rem 1rem 0;
   cursor: pointer;
+  display: inline-block;
 }
 </style>

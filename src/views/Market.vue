@@ -22,11 +22,13 @@
     <template #other>
       <Product />
     </template>
-    <Card
-      v-for="card in products.products"
-      :key="card.id"
-      :card="card"
-    />
+    <TransitionGroup name="list" tag="div" :class="$style.catalog">
+      <Card
+        v-for="card in products.products"
+        :key="card.id"
+        :card="card">{{card.id}}
+      </Card>
+    </TransitionGroup>
   </Catalog>
 </template>
 
@@ -41,4 +43,11 @@
 </script>
 
 <style lang="scss" module>
+  .catalog {
+    // gap: 1rem;
+    // display: flex;
+    // flex-wrap: wrap;
+    position: relative;
+    min-height: 100%;
+  }
 </style>

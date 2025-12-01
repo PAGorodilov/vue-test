@@ -9,9 +9,7 @@
     <TransitionGroup name="list" tag="div" :class="$style.tags">
       <slot name="tags" />
     </TransitionGroup>
-    <TransitionGroup name="list" tag="div" :class="$style.catalog">
-      <slot />
-    </TransitionGroup>
+    <slot />
     <slot name="other" />
   </section>
 </template>
@@ -43,12 +41,6 @@
     min-height: 3rem;
     display: flex;
     gap: 0.5rem;
-    position: relative;
-  }
-  .catalog {
-    gap: 1rem;
-    display: flex;
-    flex-wrap: wrap;
     position: relative;
   }
 }
