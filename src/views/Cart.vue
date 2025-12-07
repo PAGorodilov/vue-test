@@ -1,13 +1,25 @@
 <template>
   <div :class="$style.cart">
     <h1>Shopping Cart</h1>
-    <NDataTable
-      :columns="columns"
-      :data="state.getCartElements"
-      :pagination="false"
-      :bordered="false"
-      :class="$style.table"
-    />
+    <TransitionGroup name="list" tag="div" :class="$style.tags">
+      <div
+        v-for="row in state.getCartElements"
+        :key="row.id"
+        :class="$style.table"
+      >
+        <img :src="getImageUrl(row.image)" :class="$style.image" />
+        <h2 :class="$style.title">
+          {{ row.title }}
+        </h2>
+        <h3 :class="$style.brand">
+          {{ brands.brandByProduct(row).title }}
+        </h3>
+        <PriceCell :class="$style.priceCol" :row="row"></PriceCell>
+        <QuantityCell :class="$style.qtyCol" :row="row"></QuantityCell>
+        <TotalCell :class="$style.sumCol" :row="row"></TotalCell>
+        <DeleteButton :class="$style.delCol" @click="state.update(0, row)" :row="row"></DeleteButton>
+      </div>
+    </TransitionGroup>
     <h1
       v-if="state.cart.length"
       :class="$style.total"
@@ -22,14 +34,24 @@
         Checkout
       </NButton>
     </h1>
+    <NResult
+      v-else
+      status="404"
+      title="No goods in the chart"
+      :class="$style.prompt"
+    >
+      <h3>Add some goods in sfs</h3>
+      <RouterLink to="/">
+        <img src="@/assets/images/logo.png" />
+      </RouterLink>
+    </NResult>
   </div>
 </template>
 
 <script setup>
-  import { NDataTable, NButton } from 'naive-ui'
+  import { NButton, NResult } from 'naive-ui'
   import { useState, loadResources } from '@/utils/Base'
   import { h, useCssModule } from 'vue'
-  import ProductCell from '@/components/table-elements/ProductCell.vue'
   import PriceCell from '@/components/table-elements/PriceCell.vue'
   import QuantityCell from '@/components/table-elements/QuantityCell.vue'
   import TotalCell from '@/components/table-elements/TotalCell.vue'
@@ -38,55 +60,6 @@
   const $style = useCssModule()
   const { state, getImageUrl, formatPrice } = useState()
   const { brands, products } = await loadResources()
-
-  const columns = [
-    {
-      title: '',
-      sortOrder: false,
-      key: 'image',
-      className: $style.imageCol,
-      render: (row) => h(
-        'img',
-        {
-          src: getImageUrl(row.image),
-          class: $style.image,
-        },
-      ),
-    },
-    {
-      title: 'Item',
-      key: 'title',
-      render: (row) => h(ProductCell, { row }),
-    },
-    {
-      title: 'Price',
-      sortOrder: false,
-      key: 'regular_price',
-      className: $style.priceCol,
-      render: (row) => h(PriceCell, { row }),
-    },
-    {
-      title: 'Qty',
-      sortOrder: false,
-      key: 'id',
-      className: $style.qtyCol,
-      render: (row) => h(QuantityCell, { row }),
-    },
-    {
-      title: 'Total',
-      sortOrder: false,
-      key: 'sum',
-      className: $style.sumCol,
-      render: (row) => h(TotalCell, { row }),
-    },
-    {
-      title: '',
-      sortOrder: false,
-      key: 'delete',
-      className: $style.delCol,
-      render: (row) => h(DeleteButton, { row, onClick: () => state.update(0, row) }),
-    }
-  ]
 </script>
 
 <style lang="scss" module>
@@ -94,15 +67,53 @@
   width: 100%;
   padding: 1rem;
 }
+.tags {
+  min-height: 3rem;
+  position: relative;
+}
 .table {
-  .imageCol {
-    width: 12rem;
+  border-top: 1px solid #1111111e;
+  padding: 1rem 0 1rem 0;
+  display: grid;
+  grid-template-columns: 7rem 1fr 1fr 5rem;
+  grid-template-rows: 1fr 0.7fr 0.6fr;
+  grid-template-areas:
+    "image title title price"
+    "image brand brand ."
+    "image del qty sum";
+  gap: 0.5rem;
+  .image {
+    grid-area: image;
+  }
+  .title {
+    grid-area: title;
+    margin: 0;
+    font-size: 1.7rem;
+  }
+  .brand {
+    grid-area: brand;
+    margin: 0;
+  }
+  .priceCol {
+    grid-area: price;
+    text-align: center;
+    margin: 0;
   }
   .qtyCol {
-    width: 7rem;
-  }
-  .priceCol, .qtyCol, .sumCol, .delCol {
+    grid-area: qty;
     text-align: center;
+    width: 5rem;
+    justify-self: end;
+  }
+  .sumCol {
+    grid-area: sum;
+    text-align: center;
+    margin: 0;
+  }
+  .delCol {
+    grid-area: del;
+    display: none;
+    justify-items: center;
   }
 }
 .total {
@@ -116,5 +127,45 @@
 }
 .checkout {
   width: 12rem;
+}
+.prompt {
+  text-align: center;
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .table {
+    grid-template-columns: 1fr 2fr 8rem;
+    grid-template-rows: 1fr 0.7fr 0.6fr 1fr;
+    grid-template-areas:
+      "image title price"
+      "image brand qty"
+      "image . sum"
+      "image . del";
+    .delCol {
+      display: unset;
+    }
+    .qtyCol {
+      width: 100%;
+      justify-self: stretch;
+    }
+  }
+}
+@media (min-width: 1024px) {
+  .table {
+    grid-template-columns: 1fr 2fr 8rem 8rem 8rem 3rem;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas:
+      "image title price qty sum del"
+      "image brand . . . .";
+    .delCol {
+      display: unset;
+    }
+    .qtyCol {
+      width: 100%;
+      justify-self: stretch;
+    }
+    .sumCol, .qtyCol, .priceCol, .title, .delCol {
+      align-self: anchor-center;
+    }
+  }
 }
 </style>

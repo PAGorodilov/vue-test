@@ -18,7 +18,8 @@
 .list-enter-from,
 .list-leave-to {
   opacity: 0;
-  transform: scale(0.01) ;
+  transform: scale(0.01);
+  transform-origin: top;
 }
 
 .list-leave-active {

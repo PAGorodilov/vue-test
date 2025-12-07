@@ -4,6 +4,7 @@
       <NButton
         type="primary"
         v-for="brand in brands.brands"
+        :disabled="products.filters.has(brand.id)"
         @click="products.filters.add(brand.id)"
       >
         {{ brand.title }}
@@ -26,7 +27,9 @@
       <Card
         v-for="card in products.products"
         :key="card.id"
-        :card="card">{{card.id}}
+        :card="card"
+      >
+        {{card.id}}
       </Card>
     </TransitionGroup>
   </Catalog>
@@ -49,5 +52,10 @@
     // flex-wrap: wrap;
     position: relative;
     min-height: 100%;
+  }
+  @media (min-width: 768px) {
+    .filterButton {
+      display: none;
+    }
   }
 </style>

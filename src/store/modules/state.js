@@ -7,7 +7,7 @@ export default defineStore('state', {
   }),
   getters: {
     getCartElements() {
-      return [...new Set(this.cart)]
+      return [...new Set(this.cart)].sort((a, b) => a.title - b.title)
     },
     getCartElementQuantity() {
       return (item) => this.cart.filter(e => e.id === item.id).length

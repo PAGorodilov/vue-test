@@ -3,14 +3,13 @@
     placement="right"
     close-on-esc
     :width="500"
-    :class="$style.product"
     :show="state.openedCard !== null"
     @update:show="state.openedCard = null"
   >
     <NDrawerContent closable>
-      <NCard v-if="currentProduct" class="">
+      <NCard v-if="currentProduct">
         <template #cover>
-          <img :src="getImageUrl(currentProduct.image)" class="">
+          <img :src="getImageUrl(currentProduct.image)">
         </template>
         <template #header>
           {{ currentProduct.title }}
@@ -49,17 +48,6 @@
   const currentProduct = computed(() => {
     return products.productById(state.openedCard)
   })
-
-//     "type": "simple",
-//     "id": 1,
-//     "sku": "s1",
-//     "title": "Product 1",
-//     "regular_price": {
-//       "currency": "USD",
-//       "value": 27.12
-//     },
-//     "image": "/images/1.png",
-//     "brand": 9
 </script>
 
 <style lang="scss" module>
@@ -73,5 +61,10 @@
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
   overflow: hidden;
+}
+@media (max-width: 600px) {
+  :global(.n-drawer) {
+    width: 100%!important;
+  }
 }
 </style>

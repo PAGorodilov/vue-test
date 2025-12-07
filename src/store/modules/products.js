@@ -10,7 +10,8 @@ export default defineStore('productsStore', {
   }),
   getters: {
     products () {
-      return this.filters.size ? this.productsList.filter(e => this.filters.has(e.brand)) : this.productsList
+      return (this.filters.size ? this.productsList.filter(e => this.filters.has(e.brand)) : this.productsList)
+        .sort((a, b) => a.title - b.title)
     },
     productById (state) {
       return (id) => state.productsList.find(e => e.id === id)

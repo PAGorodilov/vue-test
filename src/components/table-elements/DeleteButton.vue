@@ -1,10 +1,8 @@
 <template>
   <NButton tertiary>
-    <template #icon>
-      <NIcon>
-        <TrashOutline />
-      </NIcon>
-    </template>
+    <NIcon>
+      <TrashOutline />
+    </NIcon>
   </NButton>
 </template>
 
